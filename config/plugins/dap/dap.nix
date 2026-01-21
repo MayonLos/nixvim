@@ -1,3 +1,0 @@
-{
-    plugins.dap.enable = true;
-}
