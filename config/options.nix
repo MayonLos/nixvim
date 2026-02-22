@@ -52,7 +52,7 @@
     clipboard = {
     providers = {
       # Wayland 桌面（Hyprland / GNOME Wayland / Sway 等）
-      # wl-copy.enable = true;
+      wl-copy.enable = true;
 
       # X11 桌面（Xorg）
       xclip.enable = true;
@@ -67,5 +67,17 @@ vim.api.nvim_set_hl(0, "FloatBorder", { fg = normal.fg, bg = "NONE", bold = true
 vim.api.nvim_set_hl(0, "TreesitterContext", { link = "NormalFloat" })
 vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { fg = "#3b4261" })
 vim.api.nvim_set_hl(0, "MatchParen", { bold = true, underline = true })
+
+local restore_cursor_group = vim.api.nvim_create_augroup("RestoreCursorPosition", { clear = true })
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = restore_cursor_group,
+  callback = function(args)
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
+    if mark[1] > 0 and mark[1] <= line_count then
+      pcall(vim.api.nvim_win_set_cursor, 0, mark)
+    end
+  end,
+})
   '';
 }

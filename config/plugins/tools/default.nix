@@ -4,7 +4,8 @@
         ./gitsigns.nix
         ./leetcode.nix
         ./copilot.nix
-        # ./sidekick.nix
+        ./sidekick.nix
+        ./dap.nix
         ./navic.nix
     ];
 }
